@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/multi-style-layer.js"></script>
+        <script src="js/leaflet-svg-shape-markers.min.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="data/RezagoAgebsLeon_1.js"></script>
+        <script src="data/MicrosLeon2023_2.js"></script>
+        <script src="data/CCDLeon_3.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        })
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+            if (bounds_group.getLayers().length) {
+                map.fitBounds(bounds_group.getBounds());
+            }
+        }
+        map.createPane('pane_MapaBase_0');
+        map.getPane('pane_MapaBase_0').style.zIndex = 400;
+        var layer_MapaBase_0 = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            pane: 'pane_MapaBase_0',
+            opacity: 1.0,
+            attribution: '',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 19
+        });
+        layer_MapaBase_0;
+        function pop_RezagoAgebsLeon_1(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">.Entidad f</th>\
+                        <td>' + (feature.properties['.Entidad f'] !== null ? autolinker.link(feature.properties['.Entidad f'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">.Municipio</th>\
+                        <td>' + (feature.properties['.Municipio'] !== null ? autolinker.link(feature.properties['.Municipio'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">.Localidad</th>\
+                        <td>' + (feature.properties['.Localidad'] !== null ? autolinker.link(feature.properties['.Localidad'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">.AGEB</th>\
+                        <td>' + (feature.properties['.AGEB'] !== null ? autolinker.link(feature.properties['.AGEB'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">.Manzana</th>\
+                        <td>' + (feature.properties['.Manzana'] !== null ? autolinker.link(feature.properties['.Manzana'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">.Analf_Tot</th>\
+                        <td>' + (feature.properties['.Analf_Tot'] !== null ? autolinker.link(feature.properties['.Analf_Tot'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">.SinPriTot</th>\
+                        <td>' + (feature.properties['.SinPriTot'] !== null ? autolinker.link(feature.properties['.SinPriTot'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">.SinSecTot</th>\
+                        <td>' + (feature.properties['.SinSecTot'] !== null ? autolinker.link(feature.properties['.SinSecTot'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">.RezagoTot</th>\
+                        <td>' + (feature.properties['.RezagoTot'] !== null ? autolinker.link(feature.properties['.RezagoTot'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_RezagoAgebsLeon_1_0(feature) {
+            if (feature.properties['.RezagoTot'] >= 0.000000 && feature.properties['.RezagoTot'] <= 50.000000 ) {
+                return {
+                pane: 'pane_RezagoAgebsLeon_1',
+                opacity: 1,
+                color: 'rgba(255,255,255,0.2)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(26,150,65,0.2)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['.RezagoTot'] >= 50.000000 && feature.properties['.RezagoTot'] <= 200.000000 ) {
+                return {
+                pane: 'pane_RezagoAgebsLeon_1',
+                opacity: 1,
+                color: 'rgba(255,255,255,0.2)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(253,128,1,0.2)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['.RezagoTot'] >= 200.000000 && feature.properties['.RezagoTot'] <= 2891.000000 ) {
+                return {
+                pane: 'pane_RezagoAgebsLeon_1',
+                opacity: 1,
+                color: 'rgba(255,255,255,0.2)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(215,25,28,0.2)',
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_RezagoAgebsLeon_1');
+        map.getPane('pane_RezagoAgebsLeon_1').style.zIndex = 401;
+        map.getPane('pane_RezagoAgebsLeon_1').style['mix-blend-mode'] = 'normal';
+        var layer_RezagoAgebsLeon_1 = new L.geoJson(json_RezagoAgebsLeon_1, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_RezagoAgebsLeon_1',
+            layerName: 'layer_RezagoAgebsLeon_1',
+            pane: 'pane_RezagoAgebsLeon_1',
+            onEachFeature: pop_RezagoAgebsLeon_1,
+            style: style_RezagoAgebsLeon_1_0,
+        });
+        bounds_group.addLayer(layer_RezagoAgebsLeon_1);
+        map.addLayer(layer_RezagoAgebsLeon_1);
+        function pop_MicrosLeon2023_2(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Nom_Micro</th>\
+                        <td>' + (feature.properties['Nom_Micro'] !== null ? autolinker.link(feature.properties['Nom_Micro'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_MicrosLeon2023_2_0() {
+            return {
+                pane: 'pane_MicrosLeon2023_2',
+                opacity: 1,
+                color: 'rgba(1,255,1,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0, 
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_MicrosLeon2023_2');
+        map.getPane('pane_MicrosLeon2023_2').style.zIndex = 402;
+        map.getPane('pane_MicrosLeon2023_2').style['mix-blend-mode'] = 'normal';
+        var layer_MicrosLeon2023_2 = new L.geoJson(json_MicrosLeon2023_2, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_MicrosLeon2023_2',
+            layerName: 'layer_MicrosLeon2023_2',
+            pane: 'pane_MicrosLeon2023_2',
+            onEachFeature: pop_MicrosLeon2023_2,
+            style: style_MicrosLeon2023_2_0,
+        });
+        bounds_group.addLayer(layer_MicrosLeon2023_2);
+        map.addLayer(layer_MicrosLeon2023_2);
+        function pop_CCDLeon_3(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">CLAVE DE O</th>\
+                        <td>' + (feature.properties['CLAVE DE O'] !== null ? autolinker.link(feature.properties['CLAVE DE O'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">NOMBRE DEL</th>\
+                        <td>' + (feature.properties['NOMBRE DEL'] !== null ? autolinker.link(feature.properties['NOMBRE DEL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">TIPO</th>\
+                        <td>' + (feature.properties['TIPO'] !== null ? autolinker.link(feature.properties['TIPO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SERVICIOS</th>\
+                        <td>' + (feature.properties['SERVICIOS'] !== null ? autolinker.link(feature.properties['SERVICIOS'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">SITUACIÓN</th>\
+                        <td>' + (feature.properties['SITUACIÓN'] !== null ? autolinker.link(feature.properties['SITUACIÓN'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">CR</th>\
+                        <td>' + (feature.properties['CR'] !== null ? autolinker.link(feature.properties['CR'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">CZ</th>\
+                        <td>' + (feature.properties['CZ'] !== null ? autolinker.link(feature.properties['CZ'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">NOMBRE DE</th>\
+                        <td>' + (feature.properties['NOMBRE DE'] !== null ? autolinker.link(feature.properties['NOMBRE DE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">MUNICIPIO</th>\
+                        <td>' + (feature.properties['MUNICIPIO'] !== null ? autolinker.link(feature.properties['MUNICIPIO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">COMUNIDAD</th>\
+                        <td>' + (feature.properties['COMUNIDAD'] !== null ? autolinker.link(feature.properties['COMUNIDAD'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">DOMICILIO</th>\
+                        <td>' + (feature.properties['DOMICILIO'] !== null ? autolinker.link(feature.properties['DOMICILIO'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">COLONIA</th>\
+                        <td>' + (feature.properties['COLONIA'] !== null ? autolinker.link(feature.properties['COLONIA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">CP</th>\
+                        <td>' + (feature.properties['CP'] !== null ? autolinker.link(feature.properties['CP'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">GEOREFENCI</th>\
+                        <td>' + (feature.properties['GEOREFENCI'] !== null ? autolinker.link(feature.properties['GEOREFENCI'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">LIGA COMPL</th>\
+                        <td>' + (feature.properties['LIGA COMPL'] !== null ? autolinker.link(feature.properties['LIGA COMPL'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">COORDENADA</th>\
+                        <td>' + (feature.properties['COORDENADA'] !== null ? autolinker.link(feature.properties['COORDENADA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">LATITUD</th>\
+                        <td>' + (feature.properties['LATITUD'] !== null ? autolinker.link(feature.properties['LATITUD'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">LONGITUD</th>\
+                        <td>' + (feature.properties['LONGITUD'] !== null ? autolinker.link(feature.properties['LONGITUD'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_CCDLeon_3_0() {
+            return {
+                pane: 'pane_CCDLeon_3',
+                radius: 11.0,
+                opacity: 1,
+                color: 'rgba(1,13,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,255,255,1.0)',
+                interactive: true,
+            }
+        }
+        function style_CCDLeon_3_1() {
+            return {
+                pane: 'pane_CCDLeon_3',
+                radius: 12.0,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(1,1,255,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_CCDLeon_3');
+        map.getPane('pane_CCDLeon_3').style.zIndex = 403;
+        map.getPane('pane_CCDLeon_3').style['mix-blend-mode'] = 'normal';
+        var layer_CCDLeon_3 = new L.geoJson.multiStyle(json_CCDLeon_3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_CCDLeon_3',
+            layerName: 'layer_CCDLeon_3',
+            pane: 'pane_CCDLeon_3',
+            onEachFeature: pop_CCDLeon_3,
+            pointToLayers: [function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.shapeMarker(latlng, style_CCDLeon_3_0(feature));
+            },function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.shapeMarker(latlng, style_CCDLeon_3_1(feature));
+            },
+        ]});
+        bounds_group.addLayer(layer_CCDLeon_3);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'<img src="legend/CCDLeon_3.png" /> CCD Leon': layer_CCDLeon_3,'<img src="legend/MicrosLeon2023_2.png" /> Micros Leon 2023': layer_MicrosLeon2023_2,'Rezago Agebs Leon<br /><table><tr><td style="text-align: center;"><img src="legend/RezagoAgebsLeon_1_050Personas0.png" /></td><td>0 - 50 Personas</td></tr><tr><td style="text-align: center;"><img src="legend/RezagoAgebsLeon_1_50200Personas1.png" /></td><td>50 - 200 Personas</td></tr><tr><td style="text-align: center;"><img src="legend/RezagoAgebsLeon_1_2002891Personas2.png" /></td><td>200 - 2891 Personas</td></tr></table>': layer_RezagoAgebsLeon_1,"Mapa Base": layer_MapaBase_0,},{collapsed:false}).addTo(map);
+        setBounds();
+        var i = 0;
+        layer_MicrosLeon2023_2.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['Nom_Micro'] !== null?String('<div style="color: #000000; font-size: 8pt; font-weight: bold; font-family: \'MS Shell Dlg 2\', sans-serif;">' + layer.feature.properties['Nom_Micro']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_MicrosLeon2023_2'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+        resetLabels([layer_MicrosLeon2023_2]);
+        map.on("zoomend", function(){
+            resetLabels([layer_MicrosLeon2023_2]);
+        });
+        map.on("layeradd", function(){
+            resetLabels([layer_MicrosLeon2023_2]);
+        });
+        map.on("layerremove", function(){
+            resetLabels([layer_MicrosLeon2023_2]);
+        });
+        </script>
+    </body>
+</html>
